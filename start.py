@@ -12,13 +12,13 @@ reload(sys)
 sys.setdefaultencoding('utf8')
 
 # Hexo 文件夹
-HEXO_DIR = '/Users/go_songs/Documents/fuckblog/source/_posts'
+HEXO_DIR = 'F:/Blog/source/_posts'
 
 # 登录有道云笔记后存储在 Cookie 里的值
-YNOTE_PERS = 'v2|urstoken||YNOTE||web||-1||1498882067319||116.226.216.207||go_songs@163.com||k5RfzEOMqFRPy0Hq4hLzG0gBnfY5PMgL06ZhMz5nH64RQyOMYWnHqS0YM64eBkM6B0e4nfq4nMUf0QB6LJK6LzWR'
-YNOTE_SESS = 'v2|8r8rH29TFWpFhHgZ6MeL0wFPLPS6LgyRwLkfzfOMY50kf0LqFkMzERlEnfzWk4gLRUY0Lwz64pz0qLhLPFP4quRlY6LPz6MU50'
-YNOTE_LOGIN = '3||1498882067334'
-CSTK = 'Jukb45Yq'
+YNOTE_PERS = 'v2|wxoa||YNOTE||web||-1||1536576896308||60.194.106.2||weixinobU7VjqIKtVj0kW2Gct_yzllg-MA||wFRLPuh4PFRwLOfJ4hLkfROMnHquP4wL0zEOLPuO4Qy0QyO4zYO4Y50UE0HJBn4gFRpBkfO5hfez0OMOflEnHlER'
+YNOTE_SESS = 'v2|0ZWkmsn6VRgLnHTynMJZ0qBO4e4nfguRk564wB64JK0pZhfzWkLpK0eZhLUYOLpLRwShfQyPMUGRlm64J4P4TLRlGOfgFOMOMR'
+YNOTE_LOGIN = '3||1536576896325'
+CSTK = 'F6LTrPEd'
 
 HEADERS = {
     'Accept-Encoding':
@@ -104,10 +104,10 @@ def getNoteDetail(note):
         resCon = res.content
 
         time = ''
-        if note['modifyTime']:  # 优先选用修改时间
-            time = parseTS(note['modifyTime'])
-        else:
+        if note['createTime']:  # 优先选用创建时间
             time = parseTS(note['createTime'])
+        else:
+            time = parseTS(note['modifyTime'])
 
         detail = {
             'name': filterMark(note['name']),
@@ -128,6 +128,7 @@ def writeMd(detail):
         f.write('title: {title}\n'.format(title=detail['name'][:-3]))
         f.write('date: {data}\n'.format(data=detail['time']))
         f.write('tags: {tag}\n'.format(tag=detail['tag']))
+        f.write('categories: {categories}\n'.format(categories=detail['tag']))
         f.write('---\n\n\n')
         f.write(detail['content'])
         f.write('\n')
